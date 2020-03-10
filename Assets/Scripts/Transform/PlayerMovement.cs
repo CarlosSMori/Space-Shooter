@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
 		velocity = transform.position - lastPosition;
 		Move();
@@ -36,11 +36,11 @@ public class PlayerMovement : MonoBehaviour {
 
 		screenToWorld = cam.ScreenToWorldPoint(touchPos);
 
-		Vector3 movement = Vector3.Lerp(transform.position, screenToWorld, speed * Time.deltaTime);
+		Vector3 movement = Vector3.Lerp(transform.position, screenToWorld, speed * Time.fixedDeltaTime);
 
 		myRb.MovePosition(movement);
 
-		rotation.z = velocity.x * bankingValue;
+		rotation.z = -velocity.x * bankingValue;
 		myRb.MoveRotation(Quaternion.Euler(rotation));
 	}
 }
